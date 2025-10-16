@@ -14,7 +14,7 @@ const AskQ = () => {
                     defaultValue="item-1"
                 >
                     <AccordionItem value="item-1">
-                        <AccordionTrigger className='text-[#343A40]  font-normal text-[18px]'>1. Do you offer a free trial?</AccordionTrigger>
+                        <AccordionTrigger className='text-[#343A40]  font-normal text-[18px]'><h2 style={{ fontFamily: "Poppins" }}>1. Do you offer a free trial?</h2></AccordionTrigger>
                         <AccordionContent className="flex flex-col gap-4 text-balance">
                             <p className='font-medium'>
                                 Not exactly—but we offer something better.
@@ -33,7 +33,7 @@ const AskQ = () => {
                         </AccordionContent>
                     </AccordionItem>
                     <AccordionItem value="item-2">
-                        <AccordionTrigger className='text-[#343A40]  font-normal text-[18px]'>2. What is the Product Innovation Evaluation Report?</AccordionTrigger>
+                        <AccordionTrigger style={{ fontFamily: "Poppins" }} className='text-[#343A40]  font-normal text-[18px]'>2. What is the Product Innovation Evaluation Report?</AccordionTrigger>
                         <AccordionContent className="flex flex-col gap-4 text-balance">
                             <p className='font-medium'>
                                 It’s a low-commitment way to see our value before investing in a full engagement.
@@ -48,7 +48,7 @@ const AskQ = () => {
                         </AccordionContent>
                     </AccordionItem>
                     <AccordionItem value="item-3">
-                        <AccordionTrigger className='text-[#343A40]  font-normal text-[18px]'>3. Should I hire an individual expert or a full Engineering+ Pod?</AccordionTrigger>
+                        <AccordionTrigger style={{ fontFamily: "Poppins" }} className='text-[#343A40]  font-normal text-[18px]'>3. Should I hire an individual expert or a full Engineering+ Pod?</AccordionTrigger>
                         <AccordionContent className="flex flex-col gap-4 text-balance">
                             <p className='font-medium'>
                                 Engineering+ Pod?

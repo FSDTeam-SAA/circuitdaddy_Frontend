@@ -7,7 +7,7 @@ const ServiceCta = () => {
             className="rounded-2xl mx-auto my-10 bg-cover bg-center px-6 py-16 text-center"
             style={{
                 backgroundImage: "url('/serviceCta.jpg')",
-                backgroundColor: "#109B9B", // teal overlay fallback
+                backgroundColor: "#109B9B", 
             }}
         >
             <div className="max-w-2xl mx-auto text-white">

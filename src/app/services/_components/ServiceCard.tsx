@@ -54,10 +54,10 @@ export default function ServiceCard() {
 
 
                 <div className="flex flex-col sm:flex-row gap-3 w-full">
-                    <button className="flex-1 px-6 py-2.5 border border-[#00383B] rounded-lg text-sm font-medium text-[#00383B] hover:bg-gray-50 transition-colors">
+                    <button className="flex-1 px-6 py-2.5 border font-medium border-[#00383B] rounded-lg text-sm  text-[#00383B] hover:bg-gray-50 transition-colors">
                         See Profile
                     </button>
-                    <button className="flex-1 px-6 py-2.5 bg-[#00383B] rounded-lg text-sm font-medium text-white hover:bg-teal-800 transition-colors">
+                    <button className="flex-1 px-6 py-2.5 bg-[#147575] rounded-lg text-sm font-medium text-white hover:bg-teal-800 transition-colors">
                         Add to My Team
                     </button>
                 </div>
