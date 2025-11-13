@@ -5,7 +5,7 @@ import ServiceCard from "./services/_components/ServiceCard";
 import ReadyToStart from "@/components/ReadyToStart";
 import IndustriesCard from "@/components/reusebale/IndustriesCard";
 import AskQ from "./faqs/_components/AskQ";
-import Blogcard from "@/components/reusebale/Blogcard";
+import HomepageBlog from "@/components/reusebale/HomepageBlog";
 
 export default function Home() {
   return (
@@ -52,13 +52,7 @@ export default function Home() {
           </div>
 
           {/* Blog Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 justify-items-center">
-            {Array(8)
-              .fill(0)
-              .map((_, index) => (
-                <Blogcard key={index} />
-              ))}
-          </div>
+         <HomepageBlog/>
         </div>
 
       </div>

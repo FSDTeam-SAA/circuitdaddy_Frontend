@@ -33,6 +33,8 @@ import {
     Textarea
 } from "@/components/ui/textarea"
 import Image from 'next/image'
+import { useContactUs } from '@/hooks/apiCalling'
+import { Loader2 } from 'lucide-react'
 
 const formSchema = z.object({
     firstName: z.string().min(1),
@@ -49,15 +51,17 @@ const ContactForm = () => {
         resolver: zodResolver(formSchema),
 
     })
+    const contactMutation = useContactUs()
 
     function onSubmit(values: z.infer<typeof formSchema>) {
         try {
-            console.log(values);
-            toast(
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(values, null, 2)}</code>
-                </pre>
-            );
+            contactMutation.mutate({
+                firstName: values.firstName,
+                lastName: values.lastName,
+                emailAddress: values.emailAddress,
+                phoneNumber: values.phoneNumber,
+                message: values.message
+            })
         } catch (error) {
             console.error("Form submission error", error);
             toast.error("Failed to submit the form. Please try again.");
@@ -164,7 +168,7 @@ const ContactForm = () => {
                                     type="submit"
                                     className="bg-[#004D4D] hover:bg-[#006666] text-white w-full"
                                 >
-                                    Send Message
+                                    Send Message {contactMutation.isPending && <Loader2 className='animate-spin ml-2'/>}
                                 </Button>
                             </form>
                         </Form>

@@ -26,6 +26,7 @@ export function Navbar() {
   const [loginOpen, setLoginOpen] = useState(false)
   const session = useSession()
   const pathname = usePathname()
+  const role = (session.data?.user as { role: string })?.role;
   const navItems = [
     { name: "Home", href: "/" },
     { name: "Services", href: "/services" },
@@ -91,7 +92,7 @@ export function Navbar() {
               </>
             ) : (
               <DropdownMenu>
-                <DropdownMenuTrigger  asChild>
+                <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="p-0 border-none">
                     <Avatar className="w-10 h-10">
                       {session.data.user?.profileImage ? (
@@ -107,13 +108,13 @@ export function Navbar() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem>
-                    <Link href="/profile">Profile</Link>
+                    <Link href={role === "engineer" ? "/engineer/setting/profile" : "/account/setting/profile"}>Profile</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Link href="/settings">Settings</Link>
+                    <Link href={role === "engineer" ? "/engineer/setting" : "/account/setting"}>Settings</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="cursor-pointer text-red-500" onClick={() => signOut()}>
-                    Logout 
+                    Logout
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -181,13 +182,10 @@ export function Navbar() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent>
                       <DropdownMenuItem>
-                        <Link href="/profile">Profile</Link>
+                        <Link href="/account/setting">Settings</Link>
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <Link href="/settings">Settings</Link>
-                      </DropdownMenuItem>
-                      <DropdownMenuItem  onClick={() => signOut()}>
-                        
+                      <DropdownMenuItem className="cursor-pointer text-red-500" onClick={() => signOut()}>
+                        Log Out
                       </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>

@@ -10,7 +10,6 @@ import { useMutation } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 export function ChangePassword({ email ,setIsMOdalOpen}: { email: string , setIsMOdalOpen: (open: boolean) => void }) {
-    console.log("[v0] ChangePassword component rendered for email:", email)
     const [newPassword, setNewPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [showNewPassword, setShowNewPassword] = useState(false)
