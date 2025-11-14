@@ -1,7 +1,9 @@
 import { getAllBlog, getBlog, getSingleBlog } from "@/lib/blog";
 import { contactUs } from "@/lib/contactus";
+import { getAllFaq } from "@/lib/faq";
 import { changePassword, getProfile, updateAvatar, updateProfileInfo } from "@/lib/profileInfo";
 import { BlogResponse, SingelBlogResponse } from "@/types/blog";
+import { FaqResponse } from "@/types/faq";
 import { ProfileUpdatePayload, UserProfileResponse } from "@/types/userDataType";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { signOut } from "next-auth/react";
@@ -96,6 +98,15 @@ export function useProfileAvatarUpdate(token: string, onSuccessCallback?: () => 
             else toast.error("Update failed");
         },
     });
+}
+
+export function useGetAllFaq() {
+    return useQuery<FaqResponse>({
+        queryKey: ["faq"],
+        queryFn: () => {
+            return getAllFaq()
+        },
+    })
 }
 
 
