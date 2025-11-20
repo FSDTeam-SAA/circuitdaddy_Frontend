@@ -15,7 +15,6 @@ const items = [
   { label: "All", status: "" },
   { label: "Awaiting Approval", status: "pending" },
   { label: "Assigned", status: "in_progress" },
-  { label: "Rejected", status: "cancelled" },
 ];
 
 const AllProjects = () => {
