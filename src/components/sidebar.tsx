@@ -23,6 +23,7 @@ const navigation = [
   { name: "My Team", href: "/account/my-team", icon: User2 },
   { name: "Call Booking", href: "/account/call-booking", icon: PhoneCall },
   { name: "Settings", href: "/account/setting", icon: Settings },
+  { name: "Dashboard Overview", href: "/engineer", icon: LayoutPanelLeft },
 ];
 
 interface DashboardSidebarProps {

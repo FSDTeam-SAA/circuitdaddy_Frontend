@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import States from "../_components/states";
 
 const page = () => {
-    return (
-        <div>page</div>
-    )
-}
+  return (
+    <div>
+      <States />
+    </div>
+  );
+};
 
-export default page
+export default page;
