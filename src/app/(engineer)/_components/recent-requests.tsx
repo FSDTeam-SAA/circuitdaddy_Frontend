@@ -87,7 +87,7 @@ const RecentRequests = () => {
             <ProjectSkeleton />
           </>
         ) : (
-          completedProjects?.map((project: Project) => (
+          completedProjects?.slice(0,5)?.map((project: Project) => (
             <div
               key={project._id}
               className="space-y-3 border-b border-gray-300 pb-5 last:border-b-0"

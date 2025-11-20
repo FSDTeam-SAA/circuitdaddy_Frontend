@@ -89,7 +89,7 @@ const ActiveProjects = () => {
             <ProjectSkeleton />
           </>
         ) : (
-          activeProjects?.map((data: Project) => (
+          activeProjects?.slice(0,5)?.map((data: Project) => (
             <div
               key={data._id}
               className="border border-gray-300 p-4 rounded-lg space-y-6"
