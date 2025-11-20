@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins } from 'next/font/google';
 import "./globals.css";
-
+import QueryProvider from "@/provider/queryProvider";
+import { Toaster } from "sonner";
+import TopLoader from "nextjs-toploader";
 const geistSans = Poppins({
   subsets: ["latin"],
   weight: ["400", "700"],
@@ -23,7 +25,11 @@ export default function RootLayout({
       <body
         className={`${geistSans.className}  antialiased`}
       >
-        {children}
+        <QueryProvider>
+          <TopLoader color="#147575" shadow="0 0 10px #147575, 0 0 5px #147575" showSpinner={false} height={4} easing="ease-in" />
+          {children}
+          <Toaster />
+        </QueryProvider>
       </body>
     </html>
   );

@@ -13,7 +13,7 @@ const ForgetPasswordModal = ({ open, onOpenChange }: { open: boolean, onOpenChan
                     </DialogDescription>
                 </DialogHeader>
                 {/* Login Form */}
-                <ForgetPassword />
+                <ForgetPassword onOpenChange={onOpenChange} />
             </DialogContent>
         </Dialog>
     )

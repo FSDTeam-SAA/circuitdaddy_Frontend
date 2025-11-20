@@ -1,16 +1,28 @@
-import React from 'react'
-import PersonalInfo from '../_components/PersonalInfo'
-import { SideSetting } from '../_components/SideSetting'
+import React from "react";
+import PersonalInfo from "../_components/PersonalInfo";
+import { SideSetting } from "../_components/SideSetting";
 
-const page = () => {
+const Page = () => {
   return (
-    <div>
-      <div className='flex gap-6'>
-        <SideSetting />
-        <PersonalInfo />
+    <div className="p-4 sm:p-6 lg:p-8 bg-[#EDEEF1] min-h-screen">
+      <div
+        className="
+          flex flex-col 
+          lg:flex-row 
+          gap-6 
+          w-full           
+          mx-auto 
+          transition-all 
+          duration-300 
+          items-stretch
+        "
+      >
+          <SideSetting/>
+          <PersonalInfo  />
+      
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default Page;
