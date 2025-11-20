@@ -38,9 +38,42 @@ const AcceptDecline = ({ id }: { id: string }) => {
     },
   });
 
+  const { mutateAsync: rejectAsync, isPending: rejectPending } = useMutation({
+    mutationKey: ["reject-project"],
+    mutationFn: async (id: string) => {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/project/${id}/reject`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return await res.json();
+    },
+    onSuccess: (data) => {
+      toast.success(data?.message);
+      queryClient.invalidateQueries({ queryKey: ["active-project"] });
+    },
+    onError: (error) => {
+      toast.error(error?.message);
+    },
+  });
+
   const handleAccept = async (id: string) => {
     try {
       await mutateAsync(id);
+    } catch (error) {
+      console.log(`error : ${error}`);
+    }
+  };
+
+  const handleReject = async (id: string) => {
+    try {
+      await rejectAsync(id);
     } catch (error) {
       console.log(`error : ${error}`);
     }
@@ -51,7 +84,14 @@ const AcceptDecline = ({ id }: { id: string }) => {
       <Button disabled={acceptPending} onClick={() => handleAccept(id)}>
         {acceptPending ? "Accept Request..." : "Accept Request"}
       </Button>
-      <Button variant={"outline"}>Decline</Button>
+      <Button
+        disabled={rejectPending}
+        onClick={() => handleReject(id)}
+        variant={"outline"}
+        className="border border-primary"
+      >
+        {rejectPending ? "Decline..." : "Decline"}
+      </Button>
     </div>
   );
 };
