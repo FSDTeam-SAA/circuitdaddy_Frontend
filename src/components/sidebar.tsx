@@ -11,8 +11,6 @@ import {
   Settings,
   Menu,
   X,
-  ChevronLeft,
-  ChevronRight,
   Folder,
   BookAudio,
   Users,
@@ -28,10 +26,7 @@ interface DashboardSidebarProps {
   setIsCollapsed: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function DashboardSidebar({
-  isCollapsed,
-  setIsCollapsed,
-}: DashboardSidebarProps) {
+export function DashboardSidebar({ isCollapsed }: DashboardSidebarProps) {
   const pathname = usePathname();
   const [isMobileOpen, setIsMobileOpen] = React.useState(false);
 
@@ -116,7 +111,7 @@ export function DashboardSidebar({
         <aside
           className={cn(
             "fixed top-0 left-0 h-full bg-card border-r border-border transform transition-all duration-300 ease-in-out z-40 flex flex-col",
-            isCollapsed ? "w-[80px]" : "w-[260px] md:w-[300px] lg:w-[380px]",
+            isCollapsed ? "w-[80px]" : "w-[260px] md:w-[300px] lg:w-[260px]",
             "-translate-x-full lg:translate-x-0"
           )}
         >
@@ -148,58 +143,22 @@ export function DashboardSidebar({
       <aside
         className={cn(
           "fixed top-0 left-0 h-full bg-card border-r border-border transform transition-all duration-300 ease-in-out z-40 flex flex-col",
-          isCollapsed ? "w-[80px]" : "w-[260px] md:w-[300px] lg:w-[380px]",
+          isCollapsed ? "w-[80px]" : "w-[260px] md:w-[300px] lg:w-[260px]",
           isMobileOpen ? "translate-x-0" : "-translate-x-full",
           "lg:translate-x-0"
         )}
       >
         {/* Header */}
-        <div
-          className={cn(
-            "flex items-center justify-between px-4 py-4 border-border",
-            isCollapsed ? "justify-center" : ""
-          )}
-        >
-          {!isCollapsed && (
+        <div>
+          <Link href={"/"}>
             <Image
               src="/logo.png"
               alt="logo"
-              width={140}
-              height={60}
-              className="object-contain"
+              width={1000}
+              height={1000}
+              className="object-contain h-[120px] w-[220px] mx-auto"
             />
-          )}
-          <button
-            onClick={() => setIsCollapsed(!isCollapsed)}
-            className="hidden lg:flex items-center justify-center p-2 rounded-md hover:bg-muted transition-colors"
-          >
-            {isCollapsed ? (
-              <ChevronRight className="h-5 w-5 text-muted-foreground" />
-            ) : (
-              <ChevronLeft className="h-5 w-5 text-muted-foreground" />
-            )}
-          </button>
-        </div>
-
-        {/* Profile */}
-        <div
-          className={cn(
-            "flex flex-col items-center justify-center mt-6 mb-6 transition-all duration-300",
-            isCollapsed ? "px-0" : "px-4"
-          )}
-        >
-          <Image
-            src="/profile.jpg"
-            alt="profile"
-            width={80}
-            height={80}
-            className="w-14 h-14 rounded-full object-cover"
-          />
-          {!isCollapsed && role && (
-            <span className="mt-2 text-xs text-muted-foreground capitalize">
-              {role}
-            </span>
-          )}
+          </Link>
         </div>
 
         {/* Navigation */}
