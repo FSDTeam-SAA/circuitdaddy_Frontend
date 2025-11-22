@@ -6,7 +6,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="bg-[#DDFFFF] mt-10">
+    <div className="bg-[#DDFFFF]">
       {/* Top Section */}
       <div className="container mx-auto pb-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-[200px] text-white px-4">
         {/* Logo & Description */}
