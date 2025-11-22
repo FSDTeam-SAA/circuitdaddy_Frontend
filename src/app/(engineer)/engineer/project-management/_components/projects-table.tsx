@@ -28,6 +28,8 @@ interface Engineer {
   firstName: string;
   lastName: string;
   profileImage: string;
+  ismanager: boolean;
+  professionTitle: string;
 }
 
 export interface Project {
@@ -55,7 +57,7 @@ interface SessionUser {
   accessToken: string;
 }
 
-interface ApiResponse {
+export interface ApiResponse {
   statusCode: number;
   success: boolean;
   message: string;
