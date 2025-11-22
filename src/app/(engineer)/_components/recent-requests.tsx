@@ -87,17 +87,14 @@ const RecentRequests = () => {
             <ProjectSkeleton />
           </>
         ) : (
-          completedProjects?.slice(0,5)?.map((project: Project) => (
+          completedProjects?.slice(0, 5)?.map((project: Project) => (
             <div
               key={project._id}
-              className="space-y-3 border-b border-gray-300 pb-5 last:border-b-0"
+              className="space-y-5 border-b border-gray-300 pb-5 last:border-b-0"
             >
               <div className="flex items-start justify-between">
                 <div>
                   <h5 className="text-xl font-medium">{project.title}</h5>
-                  <p className="text-sm text-gray-600 mt-2">
-                    {project.company || "Unknown Company"}
-                  </p>
                 </div>
 
                 <button
