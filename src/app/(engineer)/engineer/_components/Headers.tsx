@@ -1,34 +1,3 @@
-// import React from "react";
-
-// interface HeaderProps {
-//   isCollapsed: boolean;
-// }
-
-// export const Header = ({ isCollapsed }: HeaderProps) => {
-//   return (
-//     <header
-//       className={`
-//         fixed top-0
-//         h-[80px]
-//         bg-white
-//         shadow-md
-//         z-50
-//         flex items-center px-6
-//         transition-all duration-300
-//         ${isCollapsed ? "lg:ml-[80px]" : "lg:ml-[380px]"}
-//         md:ml-[300px]
-//         w-[calc(100%-var(--sidebar-width))]
-//       `}
-//       style={{
-//         "--sidebar-width": isCollapsed ? "80px" : "380px",
-//       } as React.CSSProperties}
-//     >
-//       <h1 className="text-xl font-semibold text-gray-800">Dashboard</h1>
-    
-//     </header>
-//   );
-// };
-
 "use client";
 
 import React, { useMemo } from "react";
@@ -70,12 +39,12 @@ export const Header = ({ isCollapsed }: HeaderProps) => {
         z-50
         flex items-center px-6
         transition-all duration-300
-        ${isCollapsed ? "lg:ml-[80px]" : "lg:ml-[380px]"}
+        ${isCollapsed ? "lg:ml-[80px]" : "lg:ml-[260px]"}
         md:ml-[300px]
         w-[calc(100%-var(--sidebar-width))]
       `}
       style={{
-        "--sidebar-width": isCollapsed ? "80px" : "380px",
+        "--sidebar-width": isCollapsed ? "80px" : "260px",
       } as React.CSSProperties}
     >
       <div className="py-6 px-6">
