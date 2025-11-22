@@ -1,12 +1,12 @@
 import React from 'react'
 import DiscoveryCalls from './_components/dateTable'
 
-const CallBookingPage = () => {
+const page = () => {
   return (
     <div>
-    <DiscoveryCalls/>
+        <DiscoveryCalls/>
     </div>
   )
 }
 
-export default CallBookingPage
+export default page
