@@ -4,11 +4,12 @@ import { Progress } from "@/components/ui/progress";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import { ApiResponse } from "../../project-management/_components/projects-table";
 import ProjectCardSkeleton from "./project-card-skeleton";
 import Assign from "./assign";
 import UpdateProgress from "./update-progress";
+import ArrangeMeetingModal from "./arrange-meeting-modal";
 
 interface SessionUser {
   accessToken: string;
@@ -17,6 +18,7 @@ interface SessionUser {
 const ProjectManagements = () => {
   const { data: session, status: sessionStatus } = useSession();
   const token = (session?.user as SessionUser)?.accessToken;
+  const [isOpen, setIsOpen] = useState(false);
 
   const {
     data: projectsData,
@@ -154,8 +156,19 @@ const ProjectManagements = () => {
                 </div>
 
                 <div className="mt-6">
-                  <Button className="w-full h-[45px]">Arrange Meeting</Button>
+                  <Button
+                    className="w-full h-[45px]"
+                    onClick={() => setIsOpen(true)}
+                  >
+                    Arrange Meeting
+                  </Button>
                 </div>
+                {isOpen && (
+                  <ArrangeMeetingModal
+                    onClose={() => setIsOpen(false)}
+                    project={project}
+                  />
+                )}
               </div>
             ))}
 
