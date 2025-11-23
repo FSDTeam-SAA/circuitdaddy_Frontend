@@ -27,6 +27,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
+import { useTeamStore } from "@/store/teamStore";
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -57,9 +58,14 @@ const StatementOfWorkForm = ({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) => {
-      const [previewFiles, setPreviewFiles] = useState<File[]>([]);
+  const [previewFiles, setPreviewFiles] = useState<File[]>([]);
   const session = useSession();
   const token = (session?.data?.user as { accessToken: string })?.accessToken;
+
+  const team = useTeamStore((state) => state.team); 
+  const clearTeam = useTeamStore((state) => state.clearTeam);
+
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -71,8 +77,7 @@ const StatementOfWorkForm = ({
     },
   });
 
-
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = Array.from(event.target.files || []);
     if (previewFiles.length + selectedFiles.length > 5) {
       toast.error("You can upload a maximum of 5 files.");
@@ -88,13 +93,12 @@ const StatementOfWorkForm = ({
   //   projects post api intgration
   const { mutate, isPending } = useMutation({
     mutationKey: ["create-project"],
-    mutationFn: async (formData:FormData) => {
+    mutationFn: async (formData: FormData) => {
       const res = await fetch(
         `${process?.env.NEXT_PUBLIC_BACKEND_URL}/project`,
         {
           method: "POST",
           headers: {
-            // "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
           body: formData,
@@ -102,32 +106,46 @@ const StatementOfWorkForm = ({
       );
       return await res.json();
     },
+
+    onSuccess: (data) => {
+      if (!data?.success) {
+        toast?.error(data?.message || "Something went wrong");
+        return;
+      }
+      toast?.success(data?.message || "Project Created successfully");
+      form.reset();
+      setPreviewFiles([]);
+       clearTeam();
+      onOpenChange(false);
+      
+    },
   });
 
   // 2. Define a submit handler.
- function onSubmit(values: z.infer<typeof formSchema>) {
-  const formData = new FormData();
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    const formData = new FormData();
 
-  // Wrap all non-file data into a single JSON field
-  const data = {
-    title: values.title,
-    description: values.description,
-    totalPaid: values.totalPaid,
-    totalTimeline: values.totalTimeline,
-    engineers: [
-        "691189b4e86193b1f9d37bb7",
-        "6912a44876edcd404e5723c9",
-        "6912a4e876edcd404e5723d0"
-    ],
-  };
-
-  formData.append("data", JSON.stringify(data));
-
-  // Append files
-  previewFiles.forEach((file) => formData.append("ndaAgreement", file));
-
-  mutate(formData);
+  if (team.length === 0) {
+  toast.error("Add engineers to your team before submitting.");
+  return;
 }
+
+    // Wrap all non-file data into a single JSON field
+    const data = {
+      title: values.title,
+      description: values.description,
+      totalPaid: values.totalPaid,
+      totalTimeline: values.totalTimeline,
+      engineers: team.map((engineer)=> engineer?._id),
+    };
+
+    formData.append("data", JSON.stringify(data));
+
+    // Append files
+    previewFiles.forEach((file) => formData.append("ndaAgreement", file));
+
+    mutate(formData);
+  }
 
   return (
     <div>
@@ -202,7 +220,9 @@ const StatementOfWorkForm = ({
                           className="w-full h-[49px] py-3 px-4 rounded-[8px] border-[1px] border-[#CBD5E1] placeholder:text-[#B7B7B7]"
                           placeholder="Project budget"
                           {...field}
-                          onChange={(e) => field.onChange(Number(e.target.value))}
+                          onChange={(e) =>
+                            field.onChange(Number(e.target.value))
+                          }
                         />
                       </FormControl>
                       <FormMessage className="text-red-500" />
@@ -223,95 +243,104 @@ const StatementOfWorkForm = ({
                           className="w-full h-[49px] py-3 px-4 rounded-[8px] border-[1px] border-[#CBD5E1] placeholder:text-[#B7B7B7]"
                           placeholder="project timeline"
                           {...field}
-                          onChange={(e) => field.onChange(Number(e.target.value))}
+                          onChange={(e) =>
+                            field.onChange(Number(e.target.value))
+                          }
                         />
                       </FormControl>
                       <FormMessage className="text-red-500" />
                     </FormItem>
                   )}
                 />
-                 <FormField
-                control={form.control}
-                name="ndaAgreement"
-                render={() => (
-                  <FormItem>
-                    <FormLabel className="text-base font-semibold text-[#343A40] leading-[150%]">
-                      Upload Your Custom NDA
-                    </FormLabel>
+                <FormField
+                  control={form.control}
+                  name="ndaAgreement"
+                  render={() => (
+                    <FormItem>
+                      <FormLabel className="text-base font-semibold text-[#343A40] leading-[150%]">
+                        Upload Your Custom NDA
+                      </FormLabel>
 
-                    <FormControl>
-                      <div
-                        className="border border-dashed border-[#C0C3C1] rounded-lg p-6 text-center bg-[#F9FAFB] hover:bg-[#F3F4F6] transition-colors"
-                        onDragOver={(e) => e.preventDefault()}
-                        onDrop={(e) => {
-                          e.preventDefault();
-                          const droppedFiles = Array.from(e.dataTransfer.files);
-                          if (previewFiles.length + droppedFiles.length > 5) {
-                            toast.error("You can upload a maximum of 5 files.");
-                            return;
-                          }
-                          setPreviewFiles((prev) => [...prev, ...droppedFiles]);
-                        }}
-                      >
-                        <label
-                          htmlFor="file-upload"
-                          className="cursor-pointer flex flex-col items-center justify-center space-y-2"
+                      <FormControl>
+                        <div
+                          className="border border-dashed border-[#C0C3C1] rounded-lg p-6 text-center bg-[#F9FAFB] hover:bg-[#F3F4F6] transition-colors"
+                          onDragOver={(e) => e.preventDefault()}
+                          onDrop={(e) => {
+                            e.preventDefault();
+                            const droppedFiles = Array.from(
+                              e.dataTransfer.files
+                            );
+                            if (previewFiles.length + droppedFiles.length > 5) {
+                              toast.error(
+                                "You can upload a maximum of 5 files."
+                              );
+                              return;
+                            }
+                            setPreviewFiles((prev) => [
+                              ...prev,
+                              ...droppedFiles,
+                            ]);
+                          }}
                         >
-                          <Upload className="w-8 h-8 text-[#82B7B4]" />
-                          <span className="text-sm text-[#6B7280] font-medium">
-                            Click to upload or drag and drop
-                          </span>
-                          <span className="text-xs text-[#9CA3AF]">
-                            PNG, JPG, PDF, DOC up to 10MB (max 5 files)
-                          </span>
-                          <input
-                            id="file-upload"
-                            type="file"
-                            accept=".png,.jpg,.jpeg,.pdf,.doc,.docx"
-                            multiple
-                            className="hidden"
-                            onChange={handleFileChange}
-                          />
-                        </label>
+                          <label
+                            htmlFor="file-upload"
+                            className="cursor-pointer flex flex-col items-center justify-center space-y-2"
+                          >
+                            <Upload className="w-8 h-8 text-[#82B7B4]" />
+                            <span className="text-sm text-[#6B7280] font-medium">
+                              Click to upload or drag and drop
+                            </span>
+                            <span className="text-xs text-[#9CA3AF]">
+                              PNG, JPG, PDF, DOC up to 10MB (max 5 files)
+                            </span>
+                            <input
+                              id="file-upload"
+                              type="file"
+                              accept=".png,.jpg,.jpeg,.pdf,.doc,.docx"
+                              multiple
+                              className="hidden"
+                              onChange={handleFileChange}
+                            />
+                          </label>
 
-                        {previewFiles.length > 0 && (
-                          <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-3">
-                            {previewFiles.map((file, index) => (
-                              <div
-                                key={index}
-                                className="relative border border-[#E5E7EB] rounded-lg p-2 bg-white shadow-sm"
-                              >
-                                {file.type.startsWith("image/") ? (
-                                  <Image
-                                    width={1000}
-                                    height={1000}
-                                    src={URL.createObjectURL(file)}
-                                    alt={file.name}
-                                    className="h-24 w-full object-cover rounded-md"
-                                  />
-                                ) : (
-                                  <div className="h-24 flex items-center justify-center text-sm text-gray-600">
-                                    {file.name}
-                                  </div>
-                                )}
-                                <button
-                                  type="button"
-                                  onClick={() => removeFile(index)}
-                                  className="absolute top-1 right-1 bg-white rounded-full shadow p-1 hover:bg-gray-100"
+                          {previewFiles.length > 0 && (
+                            <div className="mt-4 grid grid-cols-2 md:grid-cols-3 gap-3">
+                              {previewFiles.map((file, index) => (
+                                <div
+                                  key={index}
+                                  className="relative border border-[#E5E7EB] rounded-lg p-2 bg-white shadow-sm"
                                 >
-                                  <X className="w-4 h-4 text-gray-600" />
-                                </button>
-                              </div>
-                            ))}
-                          </div>
-                        )}
-                      </div>
-                    </FormControl>
+                                  {file.type.startsWith("image/") ? (
+                                    <Image
+                                      width={1000}
+                                      height={1000}
+                                      src={URL.createObjectURL(file)}
+                                      alt={file.name}
+                                      className="h-24 w-full object-cover rounded-md"
+                                    />
+                                  ) : (
+                                    <div className="h-24 flex items-center justify-center text-sm text-gray-600">
+                                      {file.name}
+                                    </div>
+                                  )}
+                                  <button
+                                    type="button"
+                                    onClick={() => removeFile(index)}
+                                    className="absolute top-1 right-1 bg-white rounded-full shadow p-1 hover:bg-gray-100"
+                                  >
+                                    <X className="w-4 h-4 text-gray-600" />
+                                  </button>
+                                </div>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      </FormControl>
 
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
+                      <FormMessage className="text-red-500" />
+                    </FormItem>
+                  )}
+                />
                 <Button
                   disabled={isPending}
                   className="w-full h-[48px] bg-[#147575] rounded-[6px] cursor-pointer text-base text-[#F7F8F8] leading-[150%] font-semibold py-3"

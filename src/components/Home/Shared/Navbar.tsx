@@ -79,7 +79,7 @@ export function Navbar() {
                 <div className="cursor-pointer relative">
                   <Heart className="w-6 h-6 text-[#147575]" />
                   {team.length > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-red-500 text-white w-5 h-5 text-xs flex items-center justify-center rounded-full">
+                    <span className="absolute -top-2 -right-2 bg-[#147575] text-white w-5 h-5 text-xs flex items-center justify-center rounded-full">
                       {team.length} {/* auto updates instantly */}
                     </span>
                   )}
