@@ -235,8 +235,8 @@ const StatementOfWorkForm = ({
                 name="ndaAgreement"
                 render={() => (
                   <FormItem>
-                    <FormLabel className="text-base md:text-lg font-medium text-[#2F2F2F] leading-[120%]">
-                      Upload Files or Images
+                    <FormLabel className="text-base font-semibold text-[#343A40] leading-[150%]">
+                      Upload Your Custom NDA
                     </FormLabel>
 
                     <FormControl>
