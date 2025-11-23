@@ -10,6 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -28,6 +29,9 @@ import { toast } from "sonner";
 import { Upload, X } from "lucide-react";
 import Image from "next/image";
 import { useTeamStore } from "@/store/teamStore";
+import SowConfirmModal from "./SowConfirmModal";
+
+
 
 const formSchema = z.object({
   title: z.string().min(2, {
@@ -59,6 +63,9 @@ const StatementOfWorkForm = ({
   onOpenChange: (open: boolean) => void;
 }) => {
   const [previewFiles, setPreviewFiles] = useState<File[]>([]);
+  const [confirmModal, setConfirmModal] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [pendingValues, setPendingValues] = useState<any>(null);
   const session = useSession();
   const token = (session?.data?.user as { accessToken: string })?.accessToken;
 
@@ -115,37 +122,42 @@ const StatementOfWorkForm = ({
       toast?.success(data?.message || "Project Created successfully");
       form.reset();
       setPreviewFiles([]);
-       clearTeam();
+      clearTeam();
       onOpenChange(false);
       
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  // OPEN CONFIRM MODAL INSTEAD OF SUBMITTING
+  const onSubmit = (values: z.infer<typeof formSchema>) => {
+    if (team.length === 0) {
+      toast.error("Add engineers before submitting.");
+      return;
+    }
+
+    setPendingValues(values);
+    setConfirmModal(true);
+
+  };
+
+  // CONFIRMED SUBMISSION
+  const handleFinalSubmit = () => {
     const formData = new FormData();
 
-  if (team.length === 0) {
-  toast.error("Add engineers to your team before submitting.");
-  return;
-}
-
-    // Wrap all non-file data into a single JSON field
     const data = {
-      title: values.title,
-      description: values.description,
-      totalPaid: values.totalPaid,
-      totalTimeline: values.totalTimeline,
-      engineers: team.map((engineer)=> engineer?._id),
+      title: pendingValues?.title,
+      description: pendingValues?.description,
+      totalPaid: pendingValues?.totalPaid,
+      totalTimeline: pendingValues?.totalTimeline,
+      engineers: team.map((e) => e._id),
     };
 
     formData.append("data", JSON.stringify(data));
-
-    // Append files
     previewFiles.forEach((file) => formData.append("ndaAgreement", file));
 
     mutate(formData);
-  }
+    setConfirmModal(false);
+  };
 
   return (
     <div>
@@ -353,6 +365,15 @@ const StatementOfWorkForm = ({
           </div>
         </DialogContent>
       </Dialog>
+        {/* CONFIRM MODAL */}
+      <SowConfirmModal
+        open={confirmModal}
+        onClose={() => setConfirmModal(false)}
+        onConfirm={handleFinalSubmit}
+        values={pendingValues}
+        files={previewFiles}
+        engineers={team.length}
+      />
     </div>
   );
 };
