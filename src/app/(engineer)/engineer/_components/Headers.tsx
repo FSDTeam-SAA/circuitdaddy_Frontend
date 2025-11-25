@@ -32,6 +32,7 @@ export const Header = ({ isCollapsed }: HeaderProps) => {
   return (
     <header
       className={`
+        
         fixed top-0
         h-[80px]
         bg-white

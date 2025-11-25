@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+
 import {
   Table,
   TableBody,
@@ -103,7 +104,7 @@ export default function PaymentHistory() {
       (transfer) => transfer?.engineer === userId
     );
 
-    return userTransfer ? `$ ${userTransfer.amount}` : "-";
+    return userTransfer ? `$${(userTransfer.amount)}` : "-";
   };
 
   const getStatusStyle = (status: string): string => {
@@ -122,6 +123,13 @@ export default function PaymentHistory() {
         return "bg-gray-100 text-gray-600";
     }
   };
+
+  // const formatCurrency = (amount: number, currency: string = "usd"): string => {
+  //   return new Intl.NumberFormat("en-US", {
+  //     style: "currency",
+  //     currency: currency.toUpperCase(),
+  //   }).format(amount / 100);
+  // };
 
   if (sessionStatus === "loading" || isLoading) {
     return (
@@ -214,9 +222,7 @@ export default function PaymentHistory() {
                 </TableCell>
 
                 <TableCell className="text-sm text-[#424242] font-medium text-center">
-                  {item?.amount
-                    ? `$ ${item?.amount}`
-                    : "-"}
+                ${item?.amount}
                 </TableCell>
 
                 <TableCell className="text-sm text-[#424242] font-medium text-center">
