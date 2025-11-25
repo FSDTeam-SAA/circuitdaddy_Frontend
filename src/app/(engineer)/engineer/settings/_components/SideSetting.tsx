@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export function SideSetting() {
   const { data: session } = useSession();
@@ -15,6 +16,7 @@ export function SideSetting() {
   const getProfile = useProfileQuery(token);
   const profileData = getProfile.data?.data;
   const { mutate, isPending } = useProfileAvatarUpdate(token);
+  const router = useRouter();
 
   const [imageUrl, setImageUrl] = useState("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -70,6 +72,40 @@ export function SideSetting() {
   const handleLevelUp = async () => {
     try {
       await mutateAsync();
+    } catch (error) {
+      console.log(`error : ${error}`);
+    }
+  };
+
+  const { mutateAsync: stipeSetUp, isPending: stripeSetupPending } =
+    useMutation({
+      mutationKey: ["stripe-setup"],
+      mutationFn: async () => {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/create-stripe-account`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+
+        return await res.json();
+      },
+      onSuccess: (data) => {
+        toast.success(data?.message);
+        router.push(data?.data?.url);
+      },
+      onError: (error) => {
+        toast.success(error?.message);
+      },
+    });
+
+  const handleSetupStripe = async () => {
+    try {
+      await stipeSetUp();
     } catch (error) {
       console.log(`error : ${error}`);
     }
@@ -149,6 +185,14 @@ export function SideSetting() {
                 : "-"
             }
           />
+        </div>
+
+        <div className="mt-5">
+          <Button disabled={stripeSetupPending} onClick={handleSetupStripe}>
+            {stripeSetupPending
+              ? "Set Up Stripe Account..."
+              : "Set Up Stripe Account"}
+          </Button>
         </div>
 
         <div className="mt-5">
