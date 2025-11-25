@@ -1,7 +1,9 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { useProfileQuery } from "@/hooks/apiCalling";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import { toast } from "sonner";
 
 interface SessionUser {
@@ -12,6 +14,9 @@ const AcceptDecline = ({ id }: { id: string }) => {
   const { data: session } = useSession();
   const token = (session?.user as SessionUser)?.accessToken;
   const queryClient = useQueryClient();
+  const getProfile = useProfileQuery(token);
+  const profileData = getProfile.data?.data;
+  const hasStripeAccount = profileData?.stripeAccountId;
 
   const { mutateAsync, isPending: acceptPending } = useMutation({
     mutationKey: ["accept-project"],
@@ -80,18 +85,39 @@ const AcceptDecline = ({ id }: { id: string }) => {
   };
 
   return (
-    <div className="space-x-5 mt-5">
-      <Button disabled={acceptPending} onClick={() => handleAccept(id)}>
-        {acceptPending ? "Accept Request..." : "Accept Request"}
-      </Button>
-      <Button
-        disabled={rejectPending}
-        onClick={() => handleReject(id)}
-        variant={"outline"}
-        className="border border-primary"
-      >
-        {rejectPending ? "Decline..." : "Decline"}
-      </Button>
+    <div>
+      <div className="space-x-5 mt-5">
+        <Button
+          disabled={acceptPending || !hasStripeAccount}
+          onClick={() => handleAccept(id)}
+          className="disabled:cursor-not-allowed"
+        >
+          {acceptPending ? "Accept Request..." : "Accept Request"}
+        </Button>
+
+        <Button
+          disabled={rejectPending || !hasStripeAccount}
+          onClick={() => handleReject(id)}
+          variant={"outline"}
+          className="border border-primary"
+        >
+          {rejectPending ? "Decline..." : "Decline"}
+        </Button>
+      </div>
+
+      <div>
+        {!hasStripeAccount && (
+          <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 mt-5">
+            <p className="text-amber-800 text-sm">
+              <strong>Payment setup required:</strong> Please connect your
+              Stripe account to accept projects and receive payments. Go to{" "}
+              <Link href={`/engineer/settings/profile`} className="underline">
+                <strong>Settings</strong>
+              </Link>
+            </p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
