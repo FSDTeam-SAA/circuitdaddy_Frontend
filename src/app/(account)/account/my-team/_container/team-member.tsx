@@ -1,6 +1,3 @@
-
-
-
 "use client";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -75,7 +72,7 @@ export function TeamMember({
 
           {isPending
             ? "Updating..."
-            : member.ismanager
+            : member?.ismanager
             ? "Manager"
             : "Make Manager"}
         </button>

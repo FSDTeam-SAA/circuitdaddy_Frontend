@@ -14,22 +14,18 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useSession } from "next-auth/react";
 
-interface Client {
-  _id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  profileImage: string;
+export interface ProjectResponse {
+  statusCode: number;
+  success: boolean;
+  message: string;
+  meta: Meta;
+  data: Project[];
 }
 
-interface Engineer {
-  _id: string;
-  email: string;
-  firstName: string;
-  lastName: string;
-  profileImage: string;
-  ismanager: boolean;
-  professionTitle: string;
+export interface Meta {
+  total: number;
+  page: number;
+  limit: number;
 }
 
 export interface Project {
@@ -37,36 +33,50 @@ export interface Project {
   title: string;
   description: string;
   client: Client;
-  engineers: Engineer[];
-  approvedEngineers: Engineer[];
-  status: "pending" | "in_progress" | "completed" | "cancelled";
+  engineers: Engineer[]; 
+  status: "in_progress" | "completed" | "pending"; // adjust based on your enum
   totalPaid: number;
   ndaAgreement: string[];
   progress: number;
   totalTimeline: number;
-  startDate: string;
-  deliveryDate: string;
+  startDate: string; // ISO date string
+  deliveryDate: string; // ISO date string
+  usedAmount: number;
+  approvedEngineers: ApprovedEngineer[];
   lastUpdated: string;
   createdAt: string;
   updatedAt: string;
   __v: number;
-  usedAmount: number;
+}
+
+export interface Client {
+  _id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  profileImage: string;
+}
+
+export interface ApprovedEngineer {
+  engineer: Engineer;
+  status: "approved" | "pending" | "rejected"; // adjust based on your enum
+  isManager: boolean;
+  _id: string;
+}
+
+export interface Engineer {
+  _id: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  profileImage: string;
+  professionTitle: string;
+  rate: number;
 }
 
 interface SessionUser {
   accessToken: string;
-}
-
-export interface ApiResponse {
-  statusCode: number;
-  success: boolean;
-  message: string;
-  meta: {
-    total: number;
-    page: number;
-    limit: number;
-  };
-  data: Project[];
+  id: string;
 }
 
 const ProjectsTable = () => {
@@ -79,9 +89,9 @@ const ProjectsTable = () => {
     data: projectsData,
     isLoading,
     isFetching,
-  } = useQuery<ApiResponse>({
+  } = useQuery<ProjectResponse>({
     queryKey: ["projects", token],
-    queryFn: async (): Promise<ApiResponse> => {
+    queryFn: async (): Promise<ProjectResponse> => {
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/project/my`,
         {

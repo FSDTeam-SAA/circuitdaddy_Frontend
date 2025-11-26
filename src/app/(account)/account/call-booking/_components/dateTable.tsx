@@ -157,8 +157,8 @@ export default function DiscoveryCalls() {
                             <li key={b._id} className="flex items-start space-x-3">
                                 <span className="w-6 h-6 rounded-full border flex items-center justify-center text-sm text-gray-500">{i + 1}</span>
                                 <div>
-                                    <p className="font-medium">{b.projectId.title}</p>
-                                    <p className="text-sm text-gray-600">Time: {b.time}</p>
+                                    <p className="font-medium">{b?.projectId?.title}</p>
+                                    <p className="text-sm text-gray-600">Time: {b?.time}</p>
                                     <p className="text-sm text-gray-600">Date: {new Date(b.date).toLocaleDateString()}</p>
                                 </div>
                             </li>
