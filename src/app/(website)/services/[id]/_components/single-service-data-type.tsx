@@ -20,6 +20,7 @@ export interface SingleUser {
   bio: string;
   rate: number | null;
   skills: string[];
+  userstatus: string;
   expertise: string[];
   industry: string;
   service: string;

@@ -223,12 +223,27 @@ const IndividualService = ({ id }: { id: string }) => {
 
             {/* Action Button */}
             <div className="mt-auto">
-              <button
-                onClick={handleAddToTeam}
-                className="bg-[#00383B] text-white px-6 py-3 rounded-md font-medium hover:bg-[#0d7377]/90 transition-colors"
-              >
-                Add {details?.firstName} To Your Team
-              </button>
+              {details?.userstatus === "available" ? (
+                <button
+                  onClick={handleAddToTeam}
+                  className="bg-[#00383B] text-white px-6 py-3 rounded-md font-medium hover:bg-[#0d7377]/90 transition-colors"
+                >
+                  Add {details?.firstName} To Your Team
+                </button>
+              ) : (
+                <div
+                  className="
+        col-span-1 
+        w-full 
+        px-6 py-3 
+        bg-red-50 
+        text-red-700 
+        text-sm 
+        rounded-xl 
+        border border-red-200
+        shadow-sm
+      ">This engineer is not available</div>
+              )}
             </div>
           </div>
         </div>

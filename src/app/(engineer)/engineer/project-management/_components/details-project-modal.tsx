@@ -192,23 +192,23 @@ const DetailsProjectModal = ({ onClose, project }: PropsTypes) => {
               </p>
             </div>
 
-            <div>
+            {/* <div>
               <h2 className="text-lg font-medium text-gray-700 mb-2">
                 Used Amount
               </h2>
               <p className="text-gray-600 bg-gray-50 p-3 rounded-lg">
                 {formatCurrency(project?.usedAmount)}
               </p>
-            </div>
+            </div> */}
 
-            <div>
+            {/* <div>
               <h2 className="text-lg font-medium text-gray-700 mb-2">
                 Remaining Budget
               </h2>
               <p className="text-gray-600 bg-gray-50 p-3 rounded-lg">
                 {formatCurrency(project?.totalPaid - project?.usedAmount)}
               </p>
-            </div>
+            </div> */}
           </div>
 
           {/* Progress */}
@@ -247,17 +247,17 @@ const DetailsProjectModal = ({ onClose, project }: PropsTypes) => {
                 >
                   <div className="flex items-center space-x-3">
                     <Image
-                      src={engineer?.profileImage}
-                      alt={engineer?.firstName}
+                      src={engineer?.engineer.profileImage}
+                      alt={engineer.engineer.firstName}
                       width={1000}
                       height={1000}
                       className="w-10 h-10 rounded-full object-cover"
                     />
                     <div>
                       <p className="font-medium text-gray-800">
-                        {engineer?.firstName} {engineer?.lastName}
+                        {engineer.engineer.firstName} {engineer.engineer.lastName}
                       </p>
-                      <p className="text-sm text-gray-600">{engineer?.email}</p>
+                      <p className="text-sm text-gray-600">{engineer.engineer.email}</p>
                     </div>
                   </div>
                   <span className="px-3 py-1 bg-blue-100 text-blue-800 text-xs font-medium rounded-full">

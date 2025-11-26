@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { useTeamStore } from "@/store/teamStore";
 
 
+
 export default function ServiceCard({ data }: { data: UserItem }) {
 
 
@@ -28,7 +29,6 @@ export default function ServiceCard({ data }: { data: UserItem }) {
     addMember(data);
     toast.success(`${data.firstName} added to your team!`);
   };
-
 
 
   return (
@@ -68,7 +68,7 @@ export default function ServiceCard({ data }: { data: UserItem }) {
           <div className="flex items-center gap-2 px-3 py-2 bg-[#E8F1F1] rounded-full border border-[#E8F1F1]">
             <BarChart3 className="w-4 h-4 text-orange-500 flex-shrink-0" />
             <span className="text-sm font-medium text-gray-700">
-             Experience - {data?.experience}
+              Experience - {data?.experience}
             </span>
           </div>
           {/* <div className="flex items-center gap-2 px-3 py-2 bg-[#E8F1F1] rounded-full border border-[#E8F1F1]">
@@ -87,7 +87,7 @@ export default function ServiceCard({ data }: { data: UserItem }) {
           <div className="flex items-center gap-2 px-3 py-2 bg-[#E8F1F1] rounded-full border border-[#E8F1F1] overflow-x-auto">
             <Award className="w-4 h-4 text-yellow-600 flex-shrink-0" />
             <span className="text-sm font-medium text-gray-700">
-              Badges - 
+              Badges -
             </span>
             <div className="flex gap-1">
               {Array.isArray(data.badge)
@@ -130,14 +130,48 @@ export default function ServiceCard({ data }: { data: UserItem }) {
               </button>
             </Link>
           </div>
-          <div className="col-span-1">
-            <button
-              onClick={handleAddToTeam}
-              className="w-full flex-1 px-6 py-2.5 bg-[#147575] rounded-lg text-sm font-medium text-white hover:bg-teal-800 transition-colors"
-            >
-              Add to My Team
-            </button>
-          </div>
+          {
+            data?.userstatus === "available" ? (
+              <div className="col-span-1">
+                <button
+                  onClick={handleAddToTeam}
+                  className="
+          w-full 
+          flex items-center justify-center gap-2
+          px-6 py-3 
+          bg-[#147575] 
+          text-white 
+          text-sm font-semibold
+          rounded-xl 
+          shadow-md 
+          hover:bg-[#0f5e5e] 
+          active:scale-[0.98]
+          transition-all duration-200
+        "
+                >
+                  Add to My Team
+                </button>
+              </div>
+            ) : (
+              <div
+                className="
+        col-span-1 
+        w-full 
+        px-6 py-3 
+        bg-red-50 
+        text-red-700 
+        text-sm 
+        rounded-xl 
+        border border-red-200
+        shadow-sm
+      "
+              >
+                This engineer is not available
+              </div>
+            )
+          }
+
+
         </div>
       </div>
     </div>

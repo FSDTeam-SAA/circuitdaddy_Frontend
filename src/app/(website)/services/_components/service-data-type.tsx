@@ -9,6 +9,7 @@ export interface BadgeItem {
 
 export interface UserItem {
   _id: string;
+  userstatus:string
   email: string;
   password: string;
   role: string;

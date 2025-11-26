@@ -10,6 +10,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export function SideSetting() {
   const { data: session } = useSession();
@@ -18,7 +20,6 @@ export function SideSetting() {
   const profileData = getProfile.data?.data;
   const { mutate, isPending } = useProfileAvatarUpdate(token);
   const router = useRouter();
-
   const [imageUrl, setImageUrl] = useState("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
@@ -112,6 +113,33 @@ export function SideSetting() {
     }
   };
 
+  const { mutateAsync: isAvailable, } =
+    useMutation({
+      mutationKey: ["stripe-setup"],
+      mutationFn: async (payload: { userstatus: string }) => {
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/engineer-status`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(payload),
+          }
+        );
+
+        return await res.json();
+      },
+      onSuccess: (data) => {
+        toast.success(data?.message);
+      },
+      onError: (error) => {
+        toast.success(error?.message);
+      },
+    });
+
+
   const { data: dashLink, isLoading } = useQuery({
     queryKey: ["stripe-dashboard"],
     queryFn: async () => {
@@ -131,6 +159,12 @@ export function SideSetting() {
     },
     enabled: !!token,
   });
+
+  const handleAvailabilityChange = (value: string) => {
+    isAvailable({
+      userstatus: value
+    });
+  };
 
   return (
     <Card className="w-full max-w-[408px] overflow-hidden border-0 shadow-lg">
@@ -199,44 +233,65 @@ export function SideSetting() {
             value={
               profileData?.createdAt
                 ? new Date(profileData.createdAt).toLocaleDateString("en-US", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })
                 : "-"
             }
           />
         </div>
 
-        <div className="mt-5">
-          {profileData?.stripeAccountId ? (
-            <Link href={`${dashLink?.url}`} target="_blank">
-              <Button>
-                {isLoading
-                  ? "Go to Stripe Dashboard..."
-                  : "Go to Stripe Dashboard"}
+        <div className="flex  gap-2">
+          <div className="mt-5">
+            {profileData?.stripeAccountId ? (
+              <Link href={`${dashLink?.url}`} target="_blank">
+                <Button>
+                  {isLoading
+                    ? "Go to Stripe Dashboard..."
+                    : "Go to Stripe Dashboard"}
+                </Button>
+              </Link>
+            ) : (
+              <Button disabled={stripeSetupPending} onClick={handleSetupStripe}>
+                {stripeSetupPending
+                  ? "Set Up Stripe Account..."
+                  : "Set Up Stripe Account"}
               </Button>
-            </Link>
-          ) : (
-            <Button disabled={stripeSetupPending} onClick={handleSetupStripe}>
-              {stripeSetupPending
-                ? "Set Up Stripe Account..."
-                : "Set Up Stripe Account"}
+            )}
+          </div>
+
+          <div className="mt-5">
+            <Button
+              disabled={levelupPending}
+              className="disabled:cursor-not-allowed"
+              onClick={handleLevelUp}
+            >
+              {levelupPending
+                ? `Request For Level Up...`
+                : `Request For Level Up`}
             </Button>
-          )}
+          </div>
         </div>
 
-        <div className="mt-5">
-          <Button
-            disabled={levelupPending}
-            className="disabled:cursor-not-allowed"
-            onClick={handleLevelUp}
-          >
-            {levelupPending
-              ? `Request For Level Up...`
-              : `Request For Level Up`}
-          </Button>
-        </div>
+        {profileData?.role === "engineer" &&
+          <div className="space-y-2 mt-3">
+            <Label htmlFor="industriesOfInterest">Your Availability</Label>
+            <Select
+              onValueChange={handleAvailabilityChange}
+            >
+              <SelectTrigger id="industriesOfInterest">
+                <SelectValue placeholder={profileData?.userstatus} />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="available">Available</SelectItem>
+                <SelectItem value="not_available">Not Available</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        }
+
+
       </div>
     </Card>
   );
