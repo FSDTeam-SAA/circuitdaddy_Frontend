@@ -15,6 +15,7 @@ import {
   BookAudio,
   Users,
   CreditCard,
+  FolderPen,
 } from "lucide-react";
 import Image from "next/image";
 import React from "react";
@@ -60,6 +61,11 @@ export function DashboardSidebar({ isCollapsed }: DashboardSidebarProps) {
         name: "Requests Management",
         href: "/engineer/requests-management",
         icon: BookAudio,
+      },
+      {
+        name: "My Projects",
+        href: "/engineer/my-projects",
+        icon: FolderPen,
       },
 
       // 👇 SHOW ONLY WHEN ismanager === true

@@ -33,7 +33,7 @@ export interface Project {
   title: string;
   description: string;
   client: Client;
-  engineers: Engineer[]; 
+  engineers: Engineer[];
   status: "in_progress" | "completed" | "pending"; // adjust based on your enum
   totalPaid: number;
   ndaAgreement: string[];
@@ -59,8 +59,13 @@ export interface Client {
 
 export interface ApprovedEngineer {
   engineer: Engineer;
-  status: "approved" | "pending" | "rejected"; // adjust based on your enum
+  status: "approved" | "pending" | "rejected";
   isManager: boolean;
+  firstName: string;
+  lastName: string;
+  profileImage: string;
+  professionTitle: string;
+  email: string;
   _id: string;
 }
 
