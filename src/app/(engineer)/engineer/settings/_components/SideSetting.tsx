@@ -6,7 +6,7 @@ import { CheckCircle2, Loader2 } from "lucide-react";
 import { useProfileAvatarUpdate, useProfileQuery } from "@/hooks/apiCalling";
 import { useSession } from "next-auth/react";
 import { Button } from "@/components/ui/button";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -29,6 +29,7 @@ export function SideSetting() {
   const router = useRouter();
   const [imageUrl, setImageUrl] = useState("");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const queryClient = useQueryClient();
 
   // Set existing profile image once data is loaded
   useEffect(() => {
@@ -69,6 +70,7 @@ export function SideSetting() {
     },
     onSuccess: (data) => {
       toast.success(data?.message);
+      queryClient.invalidateQueries({queryKey: ['me']})
     },
     onError: (error) => {
       toast.success(error?.message);
@@ -242,6 +244,10 @@ export function SideSetting() {
                 : "-"
             }
           />
+
+          <div>
+            <h2>Label: {profileData?.level}</h2>
+          </div>
         </div>
 
         <div className="flex  gap-2">
