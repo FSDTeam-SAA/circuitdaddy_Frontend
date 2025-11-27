@@ -92,6 +92,11 @@ const IndividualService = ({ id }: { id: string }) => {
 
             {/* Badges */}
             <div className="mb-3">
+              {/* Badge Name */}
+              {details?.badge?.name && (
+                <p className="font-semibold mb-1">Badge: {details.badge.name}</p>
+              )}
+
               <div className="flex gap-1">
                 {Array.isArray(details?.badge)
                   ? details.badge.map((url, index) => (
@@ -116,6 +121,7 @@ const IndividualService = ({ id }: { id: string }) => {
                   ))}
               </div>
             </div>
+
 
             {/* Info Items */}
             <div className="space-y-3 mb-6">

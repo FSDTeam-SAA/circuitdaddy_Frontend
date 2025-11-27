@@ -3,6 +3,7 @@ export interface BadgeItem {
   lavel: number;
   badge: string[];
   createdAt: string;
+  name?: string;
   updatedAt: string;
   __v: number;
 }
@@ -32,7 +33,7 @@ export interface SingleUser {
   totalRating?: number;
   ratingCount?: number;
   avgRating: number;
-  badge?: BadgeItem | string[];   // supports old array or new object
+  badge?: BadgeItem ;   // supports old array or new object
   level: number;
   ismanager: boolean;
   createdAt: string;

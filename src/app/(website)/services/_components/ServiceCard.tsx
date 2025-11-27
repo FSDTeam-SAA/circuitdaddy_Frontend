@@ -120,6 +120,14 @@ export default function ServiceCard({ data }: { data: UserItem }) {
               {data?.rate}/hrs
             </span>
           </div>
+
+          <div className="flex items-center gap-2 px-3 py-2 bg-[#E8F1F1]  border border-[#E8F1F1] rounded-full mb-6 w-fit">
+            <DollarSign className="w-4 h-4 text-teal-600 flex-shrink-0" />
+            <span className="text-sm font-medium text-gray-700">
+              {data?.completedProjectsCount} Projects Completed
+            </span>
+          </div>
+
         </div>
 
         <div className="grid grid-cols-2 gap-3 w-full">
@@ -166,7 +174,7 @@ export default function ServiceCard({ data }: { data: UserItem }) {
         shadow-sm
       "
               >
-                This engineer is not available
+                engineer not available
               </div>
             )
           }
