@@ -129,7 +129,7 @@ const BadgeSelect = ({ token }: { token: string }) => {
                   src={currentUserBadge.badge[0]}
                   alt={currentUserBadge.name}
                   fill
-                  className="object-cover rounded"
+                  className="object-cover rounded-full"
                   sizes="40px"
                 />
               </div>
@@ -157,7 +157,7 @@ const BadgeSelect = ({ token }: { token: string }) => {
                       src={selectedBadgeDetails.badge[0]}
                       alt={selectedBadgeDetails.name}
                       fill
-                      className="object-cover rounded"
+                      className="object-cover rounded-full"
                       sizes="24px"
                     />
                   </div>
@@ -183,7 +183,7 @@ const BadgeSelect = ({ token }: { token: string }) => {
                           src={badge?.badge[0]}
                           alt={badge?.name}
                           fill
-                          className="object-cover rounded"
+                          className="object-cover rounded-full"
                           sizes="32px"
                         />
                       </div>

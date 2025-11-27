@@ -19,6 +19,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import BadgeSelect from "./badge-select";
+import Image from "next/image";
+import SideSettingSkeleton from "./SideSettingSkeleton";
 
 export function SideSetting() {
   const { data: session } = useSession();
@@ -70,7 +72,7 @@ export function SideSetting() {
     },
     onSuccess: (data) => {
       toast.success(data?.message);
-      queryClient.invalidateQueries({queryKey: ['me']})
+      queryClient.invalidateQueries({ queryKey: ["me"] });
     },
     onError: (error) => {
       toast.success(error?.message);
@@ -170,6 +172,10 @@ export function SideSetting() {
     });
   };
 
+  if (getProfile.isLoading) {
+    return <SideSettingSkeleton />;
+  }
+
   return (
     <Card className="w-full max-w-[408px] overflow-hidden border-0 shadow-lg">
       <div
@@ -221,6 +227,19 @@ export function SideSetting() {
             {profileData?.firstName}
           </h2>
           <p className="text-sm text-gray-500">{profileData?.role}</p>
+        </div>
+
+        <div className="flex items-center justify-center gap-2 mb-6">
+          {profileData?.badge?.badge.map((item, index) => (
+            <Image
+              key={index}
+              src={item}
+              alt="img.png"
+              width={1000}
+              height={1000}
+              className="h-12 w-12 rounded-full"
+            />
+          ))}
         </div>
 
         {/* Information List */}
