@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 import { useGetTopService } from "@/hooks/apiCalling";
 import Image from "next/image";
 
-// Data
-
 export default function TopServices() {
 
 const allData = useGetTopService(1, 6)
