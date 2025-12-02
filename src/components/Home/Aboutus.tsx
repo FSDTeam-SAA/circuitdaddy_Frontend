@@ -6,7 +6,7 @@ const Aboutus = () => {
         <div>
             <div className='container flex flex-col md:flex-row gap-10 mx-auto my-20'>
                 <div>
-                    <h2 className='font-bold text-[40px]  text-[#147575] mb-6 '><span className='text-black'>About </span> Us</h2>
+                    <h2 className='font-bold text-[40px]  text-[#147575] mb-6 '><span className='text-black'>About Talent  </span> Badger</h2>
                     <span className='text-[#9A9EA2] font-normal text-[16px] py-7'>At Talent Badger, we believe great innovation starts with great people. Our mission is to make elite consulting and development talent accessible to every business — fast, flexible, and on demand.</span>
                     <br />
                     <br />
@@ -19,8 +19,8 @@ const Aboutus = () => {
 
                     <span className='text-[#9A9EA2] font-normal text-[16px] '>We’re not just a talent platform — we’re your strategic growth partner, bridging the gap between vision and execution. Together, we build the teams that build the future.</span>
                 </div>
-                <div>
-                    <Image src="/aboutus.jpg" alt="logos" width={900} height={900} className='w-full h-full rounded-lg ' />
+                <div className='w-[600px] h-[400px]'>
+                    <Image src="/aboutus.png" alt="logos" width={900} height={900} className='w-full object-cover h-full rounded-lg ' />
                 </div>
             </div>
         </div>

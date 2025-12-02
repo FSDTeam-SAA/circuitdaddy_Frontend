@@ -1,10 +1,12 @@
+
+
 "use client";
 import React from "react";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import BrandComponent from "./Shared/BrandComponent";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface HeroProps {
   title1: string;
@@ -29,15 +31,23 @@ const Hero: React.FC<HeroProps> = ({
   buttonHref1,
   buttonHref2,
 }) => {
+  // Detect pathname
+  const pathname = usePathname();
+
+  // Hide button1 if current page contains "services"
+  const hideButton1 = pathname.includes("services");
+
   return (
     <div className="bg-[#EEFFFF]">
       {/* HERO SECTION */}
       <div className="container mx-auto flex flex-col-reverse md:flex-row items-center justify-between gap-10 py-10 px-5">
+        
         {/* LEFT SIDE */}
         <div className="w-full md:w-1/2 text-center md:text-left">
-          {/* Avatar Row */}
           <div className="flex flex-col items-center md:items-start">
-            <div className="flex flex-row flex-wrap items-center justify-center md:justify-start mb-6 gap-2">
+
+            {/* Avatar Row */}
+            {/* <div className="flex flex-row flex-wrap items-center justify-center md:justify-start mb-6 gap-2">
               <div className="flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background *:data-[slot=avatar]:grayscale">
                 <Avatar className="w-8 h-8">
                   <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
@@ -52,10 +62,11 @@ const Hero: React.FC<HeroProps> = ({
                   <AvatarFallback>ER</AvatarFallback>
                 </Avatar>
               </div>
+
               <p className="text-[#8E938F] font-normal text-[14px]">
                 50k+ Satisfied Customers
               </p>
-            </div>
+            </div> */}
 
             {/* Title + Description */}
             <h1 className="text-[32px] sm:text-[40px] md:text-[56px] font-semibold leading-tight">
@@ -67,11 +78,16 @@ const Hero: React.FC<HeroProps> = ({
 
             {/* Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 mt-8 justify-center md:justify-start">
-              <Link href={buttonHref1}>
-                <Button className="bg-[#00383B] py-3 hover:bg-[#147575] w-full sm:w-auto">
-                  {buttonName1}
-                </Button>
-              </Link>
+
+              {/* Conditionally Hide Button 1 */}
+              {!hideButton1 && (
+                <Link href={buttonHref1}>
+                  <Button className="bg-[#00383B] py-3 hover:bg-[#147575] w-full sm:w-auto">
+                    {buttonName1}
+                  </Button>
+                </Link>
+              )}
+
               <Link href={buttonHref2}>
                 <Button className="border border-[#00383B] text-[#00383B] bg-transparent hover:bg-transparent w-full sm:w-auto">
                   {buttonName2}
@@ -88,7 +104,7 @@ const Hero: React.FC<HeroProps> = ({
             alt="Hero Image"
             width={1200}
             height={600}
-            className="rounded-xl w-full h-[250px] sm:h-[400px] md:h-[600px] object-cover"
+            className="rounded-xl w-full h-[250px] sm:h-[400px] md:h-[600px]  object-center"
           />
         </div>
       </div>

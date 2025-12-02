@@ -53,6 +53,26 @@ export default function ServiceCard({ data }: { data: UserItem }) {
           {data?.firstName} {data?.lastName}
         </h2>
 
+        {/* Badges */}
+        <div className="flex gap-1">
+          {(Array.isArray(data?.badge)
+            ? data.badge
+            : Array.isArray(data?.badge?.badge)
+              ? data.badge.badge
+              : []
+          )?.map((url: string, index: number) => (
+            <Image
+              key={index}
+              src={url}
+              alt={`Badge ${index + 1}`}
+              width={40}
+              height={40}
+              className="rounded-full"
+            />
+          ))}
+        </div>
+
+
         <p className="text-[16px] text-[#929292] mb-6 leading-relaxed">
           {data?.professionTitle}
         </p>
@@ -61,16 +81,21 @@ export default function ServiceCard({ data }: { data: UserItem }) {
           <div className="flex items-center gap-2 px-3 py-2 bg-[#E8F1F1] rounded-full border border-[#E8F1F1]">
             <Zap className="w-4 h-4 text-amber-500 flex-shrink-0" />
             <span className="text-sm font-medium text-[#147575] ">
-              {data?.skills?.slice(0,2)?.join(" , ")}
+              {data?.skills?.slice(0, 2)?.join(" , ")}
             </span>
           </div>
 
-          <div className="flex items-center gap-2 px-3 py-2 bg-[#E8F1F1] rounded-full border border-[#E8F1F1]">
-            <BarChart3 className="w-4 h-4 text-orange-500 flex-shrink-0" />
-            <span className="text-sm font-medium text-gray-700">
-              Experience - {data?.experience}
-            </span>
-          </div>
+          {data?.experience && (
+            <div className="flex items-center gap-2 px-3 py-2 bg-[#E8F1F1] rounded-full border border-[#E8F1F1]">
+              <BarChart3 className="w-4 h-4 text-orange-500 flex-shrink-0" />
+              <span className="text-sm font-medium text-gray-700">
+                Experience - {data?.experience}
+              </span>
+            </div>
+          )
+
+          }
+
           {/* <div className="flex items-center gap-2 px-3 py-2 bg-[#E8F1F1] rounded-full border border-[#E8F1F1]">
             <MessageSquare className="w-4 h-4 text-blue-500 flex-shrink-0" />
             <span className="text-sm font-medium text-gray-700">
@@ -84,49 +109,27 @@ export default function ServiceCard({ data }: { data: UserItem }) {
               Level - {data?.level}
             </span>
           </div>
-          <div className="flex items-center gap-2 px-3 py-2 bg-[#E8F1F1] rounded-full border border-[#E8F1F1] overflow-x-auto">
-            <Award className="w-4 h-4 text-yellow-600 flex-shrink-0" />
-            <span className="text-sm font-medium text-gray-700">
-              Badges -
-            </span>
-            <div className="flex gap-1">
-              {Array.isArray(data.badge)
-                ? data.badge.map((url, index) => (
-                  <Image
-                    key={index}
-                    src={url}
-                    alt={`Badge ${index + 1}`}
-                    width={15}
-                    height={15}
-                    className="rounded-full "
-                  />
-                ))
-                : data.badge?.badge?.map((url, index) => (
-                  <Image
-                    key={index}
-                    src={url}
-                    alt={`Badge ${index + 1}`}
-                    width={15}
-                    height={15}
-                    className="rounded-full"
-                  />
-                ))}
+
+          {data?.rate != null && data.rate > 0 && (
+            <div className="flex items-center gap-2 px-3 py-2 bg-[#E8F1F1] border border-[#E8F1F1] rounded-full mb-6 w-fit">
+              <DollarSign className="w-4 h-4 text-teal-600 flex-shrink-0" />
+              <span className="text-sm font-medium text-gray-700">
+                {data.rate}/hrs
+              </span>
             </div>
-          </div>
+          )}
 
-          <div className="flex items-center gap-2 px-3 py-2 bg-[#E8F1F1]  border border-[#E8F1F1] rounded-full mb-6 w-fit">
-            <DollarSign className="w-4 h-4 text-teal-600 flex-shrink-0" />
-            <span className="text-sm font-medium text-gray-700">
-              {data?.rate}/hrs
-            </span>
-          </div>
 
-          <div className="flex items-center gap-2 px-3 py-2 bg-[#E8F1F1]  border border-[#E8F1F1] rounded-full mb-6 w-fit">
-            <DollarSign className="w-4 h-4 text-teal-600 flex-shrink-0" />
-            <span className="text-sm font-medium text-gray-700">
-              {data?.completedProjectsCount} Projects Completed
-            </span>
-          </div>
+          {
+            data?.completedProjectsCount > 0 && (
+              <div className="flex items-center gap-2 px-3 py-2 bg-[#E8F1F1]  border border-[#E8F1F1] rounded-full mb-6 w-fit">
+                <DollarSign className="w-4 h-4 text-teal-600 flex-shrink-0" />
+                <span className="text-sm font-medium text-gray-700">
+                  {data?.completedProjectsCount} Projects Completed
+                </span>
+              </div>
+            )
+          }
 
         </div>
 
