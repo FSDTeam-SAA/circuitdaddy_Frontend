@@ -13,7 +13,7 @@ const services = allData.data?.data
   return (
     <div className="w-full flex flex-col items-center py-16 px-4 md:px-10 lg:px-24">
       <h2 className="text-3xl md:text-4xl font-semibold text-center text-gray-900">
-        Top <span className="text-teal-700">Services</span>
+        Ways to <span className="text-teal-700"> Work With Talent Badger</span>
       </h2>
       <p className="text-gray-600 text-center max-w-2xl mt-2 mb-10">
         Precise consulting solutions, powered by world-class experts.

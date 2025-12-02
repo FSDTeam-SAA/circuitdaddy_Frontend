@@ -1,62 +1,4 @@
-// import Aboutus from "@/components/Home/Aboutus";
-// import Hero from "@/components/Home/Hero";
-// import HowItWork from "@/components/Home/HowItWork";
-// import ServiceCard from "./services/_components/ServiceCard";
-// import ReadyToStart from "@/components/ReadyToStart";
-// import AskQ from "./faqs/_components/AskQ";
-// import HomepageBlog from "@/components/reusebale/HomepageBlog";
-// import ApiIndustry from "@/components/ApiIndustry";
 
-// export default function Home() {
-//   return (
-//     <div>
-//       <Hero title1="Unlock the" colorTitile="Future Where Ideas Take Flight" title2="And Breakthroughs Begin" description="Access a curated network of world-class consultants who bring expertise across every industry. Scale your team instantly, pay only for what you need, and enjoy a seamless experience from start to finish." image="/heroimage2.jpg" buttonName1="Assemble Your Team" buttonName2="Assemble Your Team" buttonHref1="/" buttonHref2="/" />
-//       <div className="px-4 md:px-0">
-//         <Aboutus />
-//         <HowItWork />
-//         <div className="container mx-auto my-[120px]">
-//           <div>
-//             <h2 className='text-[#147575] font-bold text-[40px] mb-4'>Talent Picker</h2>
-//             <p className="text-[#929292] font-normal text-[18px]">Meet a curated selection of trusted professionals whose expertise, reliability, and excellence set the benchmark in every project.</p>
-//           </div>
-//           <div className="grid lg:grid-cols-3 md:grid-cols-2  grid-cols-1 gap-6 justify-items-center my-10">
-//             {Array(10)
-//               .fill(0)
-//               .map((_, index) => (
-//                 <ServiceCard key={index} />
-//               ))}
-//           </div>
-//         </div>
-//         <ReadyToStart />
-//         <div className="container mx-auto ">
-//           <div className='mb-[60px]' >
-//             <h2 className='text-center text-[#282828] font-bold text-[40px]'>Expertise <span className='text-[#147575]'>Across Industries</span></h2>
-//             <p className='text-[#9A9EA3] font-normal text-[16px] text-center'>Our consultants bring real-world experience from top sectors to solve your toughest challenges.</p>
-//           </div>
-//           <div >
-//             <ApiIndustry />
-//           </div>
-//         </div>
-//         <AskQ />
-//         {/* Blog Section */}
-//         <div className="container mx-auto">
-//           <div className="mb-[60px]">
-//             <h2 className="text-center text-[#282828] font-bold text-[40px]">
-//               Talent Badger <span className="text-[#147575]">Blog & Insights</span>
-//             </h2>
-//             <p className="text-[#9A9EA3] font-normal text-[16px] text-center">
-//               Stay updated with expert tips, industry trends, and practical strategies to master recruitment and talent management.
-//             </p>
-//           </div>
-
-//           {/* Blog Grid */}
-//           <HomepageBlog />
-//         </div>
-
-//       </div>
-//     </div>
-//   );
-// }
 
 
 'use client';
@@ -104,11 +46,11 @@ export default function Home() {
   return (
     <div className="mb-[20px]">
       <Hero
-        title1="Build Faster"
-        colorTitile="with On-Demand Engineering"
-        title2="Talent"
-        description="We connect companies with vetted engineering talent and cross-functional product teams—mechanical, electrical, firmware, software, data, and more—so you can build better products with less risk, lower cost, and faster timelines."
-        image="/heroimage2.jpg"
+        title1="Build Your "
+        colorTitile="Engineering Team in Days,"
+        title2="Not Months"
+        description="Talent Badger pairs companies with pre-vetted hardware, firmware, and product engineers — as complete pods or individual specialists — with transparent rates and guided scopes."
+        image="/hero-cahnge1.png"
         buttonName1="Assemble Your Team"
         buttonName2="Help Me Build My Team "
         buttonHref1="/services"
@@ -116,15 +58,15 @@ export default function Home() {
       />
 
       <div className="px-4 md:px-0">
-        <TopServices/>
+        <TopServices />
         <Aboutus />
         <HowItWork />
         <div className="container mx-auto my-[120px]">
           <div className="pb-4 md:pb-6">
-            <h2 className='text-[#147575] font-bold text-[40px] mb-4'>Team Builder</h2>
-            <p className="text-[#929292] font-normal text-[18px]">Meet a curated selection of trusted professionals whose expertise, reliability, and excellence set the benchmark in every project.</p>
+            <h2 className='text-[#147575] font-bold text-[40px] mb-4'>Explore Our Curated Talent Pool</h2>
+            <p className="text-[#929292] font-normal text-[18px]">Every engineer is vetted for technical depth, communication, and reliable delivery. Here’s a sample.</p>
           </div>
-          <TeamBuilderService/>
+          <TeamBuilderService />
         </div>
         <ReadyToStart />
         <div className="container mx-auto">
@@ -142,7 +84,7 @@ export default function Home() {
         <div className="container mx-auto">
           <div className="mb-[60px]">
             <h2 className="text-center text-[#282828] font-bold text-[40px]">
-              Talent Badger <span className="text-[#147575]">Blog & Insights</span>
+              Talent Badger <span className="text-[#147575]"> Insights</span>
             </h2>
             <p className="text-[#9A9EA3] font-normal text-[16px] text-center">
               Stay updated with expert tips, industry trends, and practical strategies to master recruitment and talent management.

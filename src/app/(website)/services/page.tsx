@@ -31,7 +31,7 @@ const page = () => {
         <div className="container mx-auto py-10">
           <div className="mb-[100px]">
             <h2 className="text-center text-[#282828] font-bold text-[40px]">
-              Talent Badger <span className="text-[#147575]">Blog & Insights</span>
+              Talent Badger <span className="text-[#147575]">Insights</span>
             </h2>
             <p className="text-[#9A9EA3] font-normal text-[16px] text-center">
               Stay updated with expert tips, industry trends, and practical strategies to master recruitment and talent management.

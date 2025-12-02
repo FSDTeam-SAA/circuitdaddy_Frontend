@@ -6,7 +6,7 @@ const Aboutus = () => {
         <div>
             <div className='container flex flex-col md:flex-row gap-10 mx-auto my-20'>
                 <div>
-                    <h2 className='font-bold text-[40px]  text-[#147575] mb-6 '><span className='text-black'>About </span> Us</h2>
+                    <h2 className='font-bold text-[40px]  text-[#147575] mb-6 '><span className='text-black'>About Talent  </span> Badger</h2>
                     <span className='text-[#9A9EA2] font-normal text-[16px] py-7'>At Talent Badger, we believe great innovation starts with great people. Our mission is to make elite consulting and development talent accessible to every business — fast, flexible, and on demand.</span>
                     <br />
                     <br />
